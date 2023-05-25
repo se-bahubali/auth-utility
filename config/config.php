@@ -4,6 +4,7 @@
  * You can place your custom package configuration in here.
  */
 return [
+    'app_url' => env('APP_URL'),
     'authservice' => [
         'url' => env('AUTH_SERVER_URL', 'http://auth.stallionexpress.xyz'),
         'client_id' => env('CLIENT_ID'),
