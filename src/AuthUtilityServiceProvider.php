@@ -18,7 +18,7 @@ class AuthUtilityServiceProvider extends ServiceProvider
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'authutility');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
-           $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+           $this->loadRoutesFrom(__DIR__ . '/../routes/stallion.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
