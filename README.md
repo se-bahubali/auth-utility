@@ -16,6 +16,8 @@ composer require stallionexpress/authutility
 
 ## Usage
 
+// lluminate/support": "^10.12.0"
+
 ```php
 // Usage description here
 ```
@@ -40,8 +42,8 @@ If you discover any security related issues, please email avinashkant@stallionex
 
 ## Credits
 
--   [Avinash Kant](https://github.com/stallionexpress)
--   [All Contributors](../../contributors)
+- [Avinash Kant](https://github.com/stallionexpress)
+- [All Contributors](../../contributors)
 
 ## License
 
