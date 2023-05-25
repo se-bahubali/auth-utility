@@ -1,0 +1,63 @@
+{
+    "name": "stallionexpress/authutility",
+    "description": "Package to implement auth",
+    "keywords": [
+        "stallionexpress",
+        "authutility"
+    ],
+    "homepage": "https://github.com/stallionexpress/authutility",
+    "support": {
+        "issues": "https://github.com/se-bahubali/stallion-auth/issues",
+        "source": "https://github.com/se-bahubali/stallion-auth"
+    },
+    "license": "MIT",
+    "type": "library",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Avinash Kant",
+            "email": "avinashkant@stallionexpress.ca",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "illuminate/support": "^10.12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.5",
+        "phpunit/phpunit": "^10.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "StallionExpress\\AuthUtility\\": "src"
+        },
+        "files": [
+            "src/stallionhelpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "StallionExpress\\AuthUtility\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "StallionExpress\\AuthUtility\\AuthUtilityServiceProvider"
+            ],
+            "aliases": {
+                "AuthUtility": "StallionExpress\\AuthUtility\\AuthUtilityFacade"
+            }
+        }
+    }
+}
