@@ -3,7 +3,6 @@
 namespace StallionExpress\AuthUtility\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use StallionExpress\AuthUtility\Providers\StallionAuthServiceProvider;
 
 class AuthUtilityServiceProvider extends ServiceProvider
 {
@@ -19,11 +18,11 @@ class AuthUtilityServiceProvider extends ServiceProvider
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'authutility');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/stallion.php');
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/stallion.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('stallion-auth-utility.php'),
+                __DIR__ . '/../../config/config.php' => config_path('stallion-auth-utility.php'),
             ], 'config');
 
             // Publishing the views.
@@ -51,9 +50,9 @@ class AuthUtilityServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
+
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'stallionauthutility');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'stallionauthutility');
 
         // Register the main class to use with the facade
         $this->app->singleton('authutility', function () {
