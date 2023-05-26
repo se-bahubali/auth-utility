@@ -52,7 +52,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "StallionExpress\\AuthUtility\\AuthUtilityServiceProvider"
+                "StallionExpress\\AuthUtility\\Providers\\AuthUtilityServiceProvider"
             ],
             "aliases": {
                 "AuthUtility": "StallionExpress\\AuthUtility\\AuthUtilityFacade"

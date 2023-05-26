@@ -24,6 +24,28 @@ CLIENT_SECRET="your client secret"
 FRONT_END_URL="your front end redirect url"
 ```
 
+## Register provider
+
+First add Register _StallionExpress\AuthUtility\Providers\StallionServiceProvider_ in your config/app.php
+
+```bash
+'providers' => [
+        StallionExpress\AuthUtility\Providers\StallionServiceProvider::class,
+]
+```
+
+## Register guard
+
+Add the below code in your config/auth.php
+
+```bash
+'guards' => [
+        'token' => [
+            'driver' => 'access_token',
+        ],
+    ],
+```
+
 ## Middleware Usage
 
 If you want to use our middleware to decode has value then add middleware to laravel project
