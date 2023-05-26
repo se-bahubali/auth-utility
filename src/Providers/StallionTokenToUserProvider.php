@@ -26,8 +26,8 @@ class StallionTokenToUserProvider implements UserProvider
 
             $user = new User;
 
-            [$user->id, $user->email, $user->abilities, $user->user_type, $user->parents] =
-                [$data->id, $data->email, $data->scopes, $data->user_type, $data->parents];
+            [$user->id, $user->email, $user->abilities, $user->user_type, $user->three_pl, $user->three_pl_customer] =
+                [$data->id, $data->email, $data->scopes, $data->user_type, $data->three_pl, $data->three_pl_customer];
         }
 
         return $user ?? null;
