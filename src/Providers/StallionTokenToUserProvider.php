@@ -6,9 +6,12 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Http;
 use StallionExpress\AuthUtility\Models\User;
+use StallionExpress\AuthUtility\Trait\STEncodeDecodeTrait;
 
 class StallionTokenToUserProvider implements UserProvider
 {
+    use STEncodeDecodeTrait;
+
     public function retrieveById($identifier)
     {
         return null;
@@ -25,6 +28,12 @@ class StallionTokenToUserProvider implements UserProvider
             $data = $response->object();
 
             $user = new User;
+
+            $data->three_pl->hash = $this->decodeHashValue($data->three_pl->hash);
+
+            if (isset($data->three_pl_customer->hash)) {
+                $data->three_pl_customer->hash = $this->decodeHashValue($data->three_pl_customer->hash);
+            }
 
             [$user->id, $user->email, $user->abilities, $user->user_type, $user->three_pl, $user->three_pl_customer] =
                 [$data->id, $data->email, $data->scopes, $data->user_type, $data->three_pl, $data->three_pl_customer];
