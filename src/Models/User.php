@@ -3,8 +3,9 @@
 namespace StallionExpress\AuthUtility\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\UserTypeEnum;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use StallionExpress\AuthUtility\Enums\UserTypeEnum;
 
 class User extends Authenticatable
 {

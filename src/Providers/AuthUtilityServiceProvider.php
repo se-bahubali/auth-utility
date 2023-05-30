@@ -3,6 +3,7 @@
 namespace StallionExpress\AuthUtility\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use StallionExpress\AuthUtility\AuthUtility;
 
 class AuthUtilityServiceProvider extends ServiceProvider
 {
