@@ -71,7 +71,8 @@ class ReplaceRouteAndRequestHashValueMiddleware
     {
         foreach ($request->all() as $key => $value) {
             $decodedValue = $this->decodeRequestValue($value);
-            $request->request->set($key, $decodedValue);
+            //$request->request->set($key, $decodedValue);
+            $request->merge([$key => $decodedValue]);
         }
     }
 
