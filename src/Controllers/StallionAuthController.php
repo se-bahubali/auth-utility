@@ -98,8 +98,6 @@ class StallionAuthController extends Controller
             $userDetails = null;
             if ($response->successful()) {
                 $userDetails = $response->json();
-
-                $userDetails['id'] = $this->encodeHashValue($userDetails['id']);
             }
 
             return response()->json([

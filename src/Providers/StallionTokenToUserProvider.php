@@ -26,17 +26,24 @@ class StallionTokenToUserProvider implements UserProvider
 
         if ($response->successful()) {
             $data = $response->object();
-
             $user = new User;
 
-            $data->three_pl->hash = $this->decodeHashValue($data->three_pl->hash);
+            if (isset($data->three_pl->hash)) {
+                $data->three_pl->hash = $this->decodeHashValue($data->three_pl->hash);
+            }
 
             if (isset($data->three_pl_customer->hash)) {
                 $data->three_pl_customer->hash = $this->decodeHashValue($data->three_pl_customer->hash);
             }
 
-            [$user->id, $user->email, $user->abilities, $user->user_type, $user->three_pl, $user->three_pl_customer] =
-                [$data->id, $data->email, $data->scopes, $data->user_type, $data->three_pl, $data->three_pl_customer];
+            if(isset($data->warehouses) && is_array($data->warehouses)){
+                foreach ($data->warehouses as $key => $warehouse) {
+                    $data->warehouses[$key]->hash = $this->decodeHashValue($warehouse->hash);
+                }
+            }
+
+            $user = $data;
+            $user->id = $this->decodeHashValue($data->hash);
         }
 
         return $user ?? null;
