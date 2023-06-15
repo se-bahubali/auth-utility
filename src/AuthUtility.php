@@ -11,7 +11,7 @@ class AuthUtility
     use STEncodeDecodeTrait;
     // Build your next great package.
 
-    public static function hasAbility(User $user, string $feature, string $action, object $modelObject = null)
+    public function hasAbility(User $user, string $feature, string $action, object $modelObject = null)
     {    
         $hasAbility = false;
 
