@@ -38,11 +38,13 @@ class StallionTokenToUserProvider implements UserProvider
             [$this->decodeHashValue($data->hash), $data->hash, $data->warehouses, $data->details, $data->user_type, $data->scopes];
 
             if($data->user_type == UserTypeEnum::THREE_PL_STAFF->value){
-                $data->three_pl->hash = $this->decodeHashValue($data->three_pl->hash);
+                $user->three_pl = $data->three_pl;
+                $user->three_pl->hash = $this->decodeHashValue($data->three_pl->hash);
             }
 
             if($data->user_type == UserTypeEnum::THREE_PL_CUSTOMER_STAFF->value){
-                $data->three_pl_customer->hash = $this->decodeHashValue($data->three_pl_customer->hash);
+                $user->three_pl_customer = $data->three_pl_customer;
+                $user->three_pl_customer->hash = $this->decodeHashValue($data->three_pl_customer->hash);
             }
         }
         return $user ?? null;
