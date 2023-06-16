@@ -22,6 +22,7 @@ class AuthUtility
      */
     public function hasAbility(User $user, string $feature, string $action):bool
     {    
-        return isset($user->abilities->{$feature}) === true && in_array($action, $user->abilities->{$feature}) === true;
+        return isset($user->abilities->{config('stallionauthutility.microservice_name')}->{$feature}) === true && 
+        in_array($action, $user->abilities->{config('stallionauthutility.microservice_name')}->{$feature}) === true;
     }
 }
