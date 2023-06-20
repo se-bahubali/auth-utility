@@ -35,7 +35,8 @@ class StallionTokenToUserProvider implements UserProvider
                 foreach ($data->warehouses as $key => $warehouse) {
                     $warehouses[$this->decodeHashValue($key)] = [
                         'name' => $warehouse->name,
-                        'hash' => $this->decodeHashValue($warehouse->hash)
+                        'hash' => $this->decodeHashValue($warehouse->hash),
+                        'id' => $this->decodeHashValue($warehouse->hash)
                     ];
                 }
             }
