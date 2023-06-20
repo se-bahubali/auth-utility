@@ -11,6 +11,6 @@ trait STEncodeDecodeTrait
 
     public function decodeHashValue($value)
     {
-        return base64_decode(str_replace('_st_', '', $value));
+        return (int) base64_decode(str_replace('_st_', '', $value));
     }
 }
