@@ -25,4 +25,43 @@ class AuthUtility
         return isset($user->abilities->{config('stallionauthutility.microservice_name')}->{$feature}) === true && 
         in_array($action, $user->abilities->{config('stallionauthutility.microservice_name')}->{$feature}) === true;
     }
+
+    public function isUserCustomerOrCustomerStaff(User $user){
+        return (in_array($user->user_type->value, [UserTypeEnum::THREE_PL_CUSTOMER->value, UserTypeEnum::THREE_PL_CUSTOMER_STAFF->value]));
+    }
+
+    public function isUser3plOr3plStaff(User $user){
+        return (in_array($user->user_type->value, [UserTypeEnum::THREE_PL->value, UserTypeEnum::THREE_PL_STAFF->value]));
+    }
+
+    public function getCustomerIdFor3PlCustomerAndStaff(User $user, ?int $customerId = null)
+    {
+        // check only for 3pl customers or 3pl customers staff
+        switch ($user->user_type->value) {
+            case UserTypeEnum::THREE_PL_CUSTOMER_STAFF->value:
+                $customerId = $user->three_pl_customer->hash;
+                break;
+            case UserTypeEnum::THREE_PL_CUSTOMER->value:
+                $customerId = $user->id;
+                break;
+        }
+
+        return $customerId;
+    }
+
+    public function getThreePlIdFor3PlAndStaff(User $user): int
+    {
+        $threePlId = $user->id;
+
+        if ($user->user_type->value == UserTypeEnum::THREE_PL_STAFF->value) {
+            $threePlId = $user->three_pl->hash;
+        }
+
+        return $threePlId;
+    }
+
+    public function getLoggedUserAssociatedWarehousesIds(User $user): array
+    {
+        return collect($user->warehouses)->pluck('hash')->toArray();
+    }
 }
