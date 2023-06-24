@@ -43,7 +43,9 @@ class StallionAuthTokenGuard implements Guard
             $user = $this->provider->retrieveByToken($this->storageKey, $token);
         }
 
-        return $this->user = $user;
+        $this->setUser($user);
+
+        return $this->user;
     }
 
     /**
