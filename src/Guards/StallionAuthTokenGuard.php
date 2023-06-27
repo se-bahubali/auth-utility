@@ -41,9 +41,8 @@ class StallionAuthTokenGuard implements Guard
         if (!empty($token)) {
             // the token was found, how you want to pass?
             $user = $this->provider->retrieveByToken($this->storageKey, $token);
-        }
-
-        $this->setUser($user);
+            $this->setUser($user);
+        }      
 
         return $this->user;
     }
