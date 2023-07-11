@@ -108,4 +108,15 @@ class StallionAuthController extends Controller
 
         return response()->json(['error' => 'Your token has been expired'], 401);
     }
+
+    /**
+     * Function will return user scopes
+     *
+     * @param int $role
+     * @return response
+     */
+    public function userScopes(int $role)
+    {
+        return response()->json(['scopes' => getScopesByUserType($role)], 200);
+    }
 }
