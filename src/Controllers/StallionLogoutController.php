@@ -39,16 +39,14 @@ class StallionLogoutController extends Controller
                         'message' => 'You have been logged out successfully.'
                     ],
                 ]);
-            }else{
-                return response()->json([
-                    'data' => false,
-                    'meta' => [
-                        'message' => 'Unauthenticated.'
-                    ],
-                ], 401);
             }
         }
 
-        return response()->json(['error' => 'Unauthenticated.'], 401);
+        return response()->json([
+            'data' => false,
+            'meta' => [
+                'message' => 'Unauthenticated.'
+            ],
+        ], 401);
     }
 }
