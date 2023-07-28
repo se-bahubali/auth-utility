@@ -12,7 +12,7 @@ class StallionExpressAnnotation
      *     path="/api/stallion/access/token/{token}",
      *     summary="Get bearer token to send with api call",
      *     operationId="st-get-bearer-token",
-     *     tags={"Stallion Brain"},
+     *     tags={"Brain Apis"},
      *     security={ {"sanctum": {} }},
      *
      *      @OA\Parameter(
@@ -64,7 +64,7 @@ class StallionExpressAnnotation
      *     path="/api/stallion/{role}/scopes",
      *     summary="Get role scopes",
      *     operationId="st-user-role-scopes",
-     *     tags={"Stallion Brain"},
+     *     tags={"Brain Apis"},
      *     security={ {"sanctum": {} }},
      *
      *      @OA\Parameter(
@@ -145,6 +145,38 @@ class StallionExpressAnnotation
      * )
      */
     public function userScopes()
+    {
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/logout",
+     *     summary="Logout user from the system",
+     *     operationId="st-logout",
+     *     tags={"Brain Apis"},
+     *     security={ {"sanctum": {} }},     *
+     *   @OA\Response(
+     *      response=201,
+     *       description="Success",
+     *
+     *      @OA\JsonContent(
+     *
+     *          @OA\Property(property="data",type="string",example="true"),
+     *          @OA\Property(property="metadata",type="object",
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="You have been logged out successfully."
+     *               ),
+     *             ),
+     *          ),
+     *   ),
+     *
+     *   @OA\Response(response=500,description="Internal server error"),
+     *
+     * )
+     */
+    public function logout()
     {
     }
 }
