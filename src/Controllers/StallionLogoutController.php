@@ -49,4 +49,10 @@ class StallionLogoutController extends Controller
             ],
         ], 401);
     }
+
+    public function webLogout()
+    {
+        \Cookie::forget('stallionexpress-auth');
+        return redirect()->to(config('app.url'));
+    }
 }

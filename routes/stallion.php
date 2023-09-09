@@ -14,4 +14,6 @@ Route::middleware(['decode_st'])->group(function () {
     Route::get('api/stallion/{role}/scopes', [StallionAuthController::class, 'userScopes'])->name('returnScopes');
 
     Route::get('api/logout', [StallionLogoutController::class, 'logout'])->name('logout');
+
+    Route::get('logout', [StallionLogoutController::class, 'webLogout'])->name('webLogout');
 });
