@@ -64,4 +64,15 @@ class AuthUtility
     {
         return collect($user->warehouses)->pluck('hash')->toArray();
     }
+
+    public function getUserId(User $user , ?int $userId = null): int
+    {
+        if($userId && $this->isUser3plOr3plStaff($user)){
+            return $userId;
+        }else if($this->isUserCustomerOrCustomerStaff($user)){
+            return $this->getCustomerIdFor3PlCustomerAndStaff($user);
+        }else if($this->isUser3plOr3plStaff($user)){
+            return $this->getThreePlIdFor3PlAndStaff($user);
+        }
+    }
 }
