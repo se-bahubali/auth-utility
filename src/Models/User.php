@@ -63,4 +63,19 @@ class User extends Authenticatable
 
         return app('Modules\\' . $module . "\App\Models\\" . $modalName)->where('user_id', $userId)->first();
     }
+
+    public function threePlStaff()
+    {
+        return $this->hasOne(ThreePlStaff::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
+
+    public function scopes()
+    {
+        return $this->hasMany(UserScope::class);
+    }
 }
