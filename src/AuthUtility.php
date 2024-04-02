@@ -46,7 +46,7 @@ class AuthUtility
                 break;
         }
 
-        return $customerId;
+        return (int) $customerId;
     }
 
     public function getThreePlIdFor3PlAndStaff(User $user): int
