@@ -8,9 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Modules\Role\App\Models\Role;
 use Modules\ThreePlStaff\App\Models\ThreePlStaff;
 use StallionExpress\AuthUtility\Enums\UserTypeEnum;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class User extends Authenticatable
 {
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
