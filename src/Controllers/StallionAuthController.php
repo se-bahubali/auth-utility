@@ -33,7 +33,7 @@ class StallionAuthController extends Controller
     }
 
     /**
-     * function is used to redirect user to auth server
+     * function is used to redirect the user to the auth server
      *
      * @return Redirect
      */
@@ -46,7 +46,7 @@ class StallionAuthController extends Controller
     }
 
     /**
-     * function is used to fetch token from auth server
+     * function is used to fetch tokens from the auth server
      *
      * @return Redirect
      */
@@ -76,11 +76,11 @@ class StallionAuthController extends Controller
         Cache::forget('link_' . $request->state);
         $stateValue = $this->encodeHashValue($request->state);
 
-        return Redirect::to(config('stallionauthutility.authservice.front_end_url') . '?key=' . $stateValue);
+        return Redirect::to(config('stallionauthutility.authservice.front_end_url').'login/' . '?key=' . $stateValue);
     }
 
     /**
-     * This function is used to return access token to the user
+     * This function is used to return an access token to the user
      *
      * @return response
      */
