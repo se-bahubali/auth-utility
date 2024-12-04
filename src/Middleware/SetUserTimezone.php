@@ -5,7 +5,7 @@ namespace StallionExpress\AuthUtility\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Trait\TimezoneTrait;
+use StallionExpress\AuthUtility\Trait\TimezoneTrait;
 use Illuminate\Support\Facades\Auth;
 
 class SetUserTimezone
