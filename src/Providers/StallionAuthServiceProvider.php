@@ -14,7 +14,6 @@ class StallionAuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -25,13 +24,9 @@ class StallionAuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Auth::extend('access_token', function ($app, $name, array $config) {
+        Auth::extend('stallionauth', function ($app, $name, array $config) {
             // automatically build the DI, put it as reference
-            $userProvider = app(StallionTokenToUserProvider::class);
-            $request = app('request');
-
-            return new StallionAuthTokenGuard($userProvider, $request, $config);
+            return new StallionAuthTokenGuard(app(StallionTokenToUserProvider::class), app('request'), $config);
         });
     }
 }
