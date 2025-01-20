@@ -5,7 +5,6 @@ namespace StallionExpress\AuthUtility\Providers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Http;
-use StallionExpress\AuthUtility\Enums\UserTypeEnum;
 use StallionExpress\AuthUtility\Models\User;
 use StallionExpress\AuthUtility\Trait\STEncodeDecodeTrait;
 
@@ -26,8 +25,9 @@ class StallionTokenToUserProvider implements UserProvider
             ])->get(config('stallionauthutility.authservice.url') . '/api/oauth/token/user');
 
         $user = null;
+        
         if ($response->successful()) {
-            $data = $response->object();
+            $data = $response->object()->data;
             $user = new User;
 
             $warehouses = [];
@@ -40,20 +40,13 @@ class StallionTokenToUserProvider implements UserProvider
                     ];
                 }
             }
-
-            [$user->id, $user->hash, $user->warehouses, $user->details, $user->user_type, $user->abilities] = 
-            [$this->decodeHashValue($data->hash), $data->hash, $warehouses, $data->details, $data->user_type, $data->scopes];
-
-            if($data->user_type == UserTypeEnum::THREE_PL_STAFF->value){
-                $user->three_pl = $data->three_pl;
-                $user->three_pl->hash = $this->decodeHashValue($data->three_pl->hash);
+            foreach ($data as $key => $value) {
+                $user->{$key} = $value;
             }
-
-            if($data->user_type == UserTypeEnum::THREE_PL_CUSTOMER_STAFF->value){
-                $user->three_pl_customer = $data->three_pl_customer;
-                $user->three_pl_customer->hash = $this->decodeHashValue($data->three_pl_customer->hash);
-            }
+            $user->id = (int)$this->decodeHashValue($data->hash);
+            $user->account_id = (int)$this->decodeHashValue($data->account_id);
         }
+      
         return $user ?? null;
     }
 
