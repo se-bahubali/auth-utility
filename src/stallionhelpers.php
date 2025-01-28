@@ -4,20 +4,19 @@ if (!function_exists('getScopesByUserType')) {
     /**
      * This function gets the list of scopes that are granted to the specified user type.
      *
-     * @param int $userType The user type.
      * @return array A list of scopes.
      */
-    function getScopesByUserType(int $userType): array
+    function getScopesByUserType(): array
     {
         $modules = config('modulescopes.modules');
+        
 
         $scopesToShow = [];
         foreach ($modules as $module) {
-            // Check if the user type is granted access to the module.
-            if (in_array($userType, config($module)['granted_to'])) {
-                // Add the module to the list of scopes to show.
+            if(config($module)['visible'])
+            {
                 array_push($scopesToShow, config($module)['module']);
-            }
+            }            
         }
 
         return $scopesToShow;

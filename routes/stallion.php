@@ -11,7 +11,7 @@ Route::middleware(['decode_st'])->group(function () {
 
     Route::get('api/stallion/access/token/{id}', [StallionAuthController::class, 'returnToken']);      
 
-    Route::get('api/stallion/{role}/scopes', [StallionAuthController::class, 'userScopes'])->name('returnScopes');
+    Route::get('api/system/scopes', [StallionAuthController::class, 'userScopes'])->name('returnScopes');
 
     Route::get('api/logout', [StallionLogoutController::class, 'logout'])->name('logout');
 

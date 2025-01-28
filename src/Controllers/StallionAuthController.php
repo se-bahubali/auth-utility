@@ -115,8 +115,8 @@ class StallionAuthController extends Controller
      * @param int $role
      * @return response
      */
-    public function userScopes(int $role)
+    public function userScopes()
     {
-        return response()->json(['scopes' => getScopesByUserType($role)], 200);
+        return response()->json(['scopes' => getScopesByUserType()], 200);
     }
 }
