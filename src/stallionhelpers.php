@@ -1,15 +1,14 @@
 <?php
 
-if (!function_exists('getScopesByUserType')) {
+if (!function_exists('getFeaturesForThreepl')) {
     /**
      * This function gets the list of scopes that are granted to the specified user type.
      *
      * @return array A list of scopes.
      */
-    function getScopesByUserType(): array
+    function getFeaturesForThreepl(): array
     {
-        $modules = config('modulescopes.modules');
-        
+        $modules = config('modulescopes.modules');        
 
         $scopesToShow = [];
         foreach ($modules as $module) {
@@ -17,6 +16,25 @@ if (!function_exists('getScopesByUserType')) {
             {
                 array_push($scopesToShow, config($module)['module']);
             }            
+        }
+
+        return $scopesToShow;
+    }
+}
+
+if (!function_exists('getSystemFeatures')) {
+    /**
+     * This function gets the list of scopes that are granted to the specified user type.
+     *
+     * @return array A list of scopes.
+     */
+    function getSystemFeatures(): array
+    {
+        $modules = config('modulescopes.modules');       
+
+        $scopesToShow = [];
+        foreach ($modules as $module) {
+            array_push($scopesToShow, config($module));
         }
 
         return $scopesToShow;

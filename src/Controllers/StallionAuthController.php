@@ -115,8 +115,13 @@ class StallionAuthController extends Controller
      * @param int $role
      * @return response
      */
+    public function threeplFeatures()
+    {
+        return response()->json(['scopes' => getFeaturesForThreepl()], 200);
+    }
+
     public function userScopes()
     {
-        return response()->json(['scopes' => getScopesByUserType()], 200);
+        return response()->json(['scopes' => getSystemFeatures()], 200);
     }
 }
