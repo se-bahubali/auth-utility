@@ -29,7 +29,7 @@ class StallionAuthController extends Controller
         $this->url = config('stallionauthutility.authservice.url');
         $this->client_secret = config('stallionauthutility.authservice.client_secret');
         $this->client_id = config('stallionauthutility.authservice.client_id');
-        $this->redirect_uri = config('stallionauthutility.app_url') . '/auth/callback';
+        $this->redirect_uri = config('stallionauthutility.app_url').'/auth/callback';
     }
 
     /**
@@ -39,9 +39,12 @@ class StallionAuthController extends Controller
      */
     public function login(Request $request)
     {
+        $isDev = $request->input('is_dev', false);
+        Cache::put('is_dev', $isDev, 60);
         $state = (string) Str::ulid();
-        Cache::put('link_' . $state, $_SERVER['HTTP_REFERER'] ?? config('stallionauthutility.authservice.front_end_url') . '/dashboard', $seconds = 120);
-        $url = config('stallionauthutility.authservice.url') . '/redirect?client_id=' . config('stallionauthutility.authservice.client_id') . '&redirect_uri=' . config('app.url') . '/auth/callback' . '&state=' . $state;
+        Cache::put('link_'.$state, $_SERVER['HTTP_REFERER'] ?? config('stallionauthutility.authservice.front_end_url').'/dashboard', $seconds = 120);
+        $url = config('stallionauthutility.authservice.url').'/redirect?client_id='.config('stallionauthutility.authservice.client_id').'&redirect_uri='.config('app.url').'/auth/callback'.'&state='.$state;
+
         return redirect($url);
     }
 
@@ -52,7 +55,7 @@ class StallionAuthController extends Controller
      */
     public function getAccessToken(Request $request)
     {
-        $response = Http::asForm()->post($this->url . '/oauth/token', [
+        $response = Http::asForm()->post($this->url.'/oauth/token', [
             'grant_type' => 'authorization_code',
             'client_id' => $this->client_id,
             'client_secret' => $this->client_secret,
@@ -71,12 +74,19 @@ class StallionAuthController extends Controller
 
         unset($data['refresh_token']);
         Cache::forget('state');
-        $data['redirect_link'] = Cache::get('link_' . $request->state);
+        $data['redirect_link'] = Cache::get('link_'.$request->state);
         Cache::put($request->state, $data, $seconds = 120);
-        Cache::forget('link_' . $request->state);
+        Cache::forget('link_'.$request->state);
         $stateValue = $this->encodeHashValue($request->state);
 
-        return Redirect::to(config('stallionauthutility.authservice.front_end_url').'login/' . '?key=' . $stateValue);
+        $url = config('stallionauthutility.authservice.front_end_url');
+
+        if (Cache::has('is_dev') && Cache::get('is_dev') == true) {
+            Cache::forget('is_dev');
+            $url = config('services.frontend_url_dev');
+        }
+
+        return Redirect::to($url.'login/'.'?key='.$stateValue);
     }
 
     /**
@@ -93,7 +103,7 @@ class StallionAuthController extends Controller
             $response = Http::withToken($token['access_token'])
                 ->withHeaders([
                     'Accept' => 'application/json',
-                ])->get(config('stallionauthutility.authservice.url') . '/api/oauth/token/user');
+                ])->get(config('stallionauthutility.authservice.url').'/api/oauth/token/user');
 
             $userDetails = null;
             if ($response->successful()) {
@@ -112,7 +122,7 @@ class StallionAuthController extends Controller
     /**
      * Function will return user scopes
      *
-     * @param int $role
+     * @param  int      $role
      * @return response
      */
     public function threeplFeatures()

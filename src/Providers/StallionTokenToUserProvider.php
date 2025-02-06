@@ -12,41 +12,39 @@ class StallionTokenToUserProvider implements UserProvider
 {
     use STEncodeDecodeTrait;
 
-    public function retrieveById($identifier)
-    {
-        return null;
-    }
+    public function retrieveById($identifier) {}
 
     public function retrieveByToken($identifier, $token)
     {
         $response = Http::withToken($token)
             ->withHeaders([
                 'Accept' => 'application/json',
-            ])->get(config('stallionauthutility.authservice.url') . '/api/oauth/token/user');
+            ])->get(config('stallionauthutility.authservice.url').'/api/oauth/token/user');
 
         $user = null;
-        
+
         if ($response->successful()) {
             $data = $response->object()->data;
             $user = new User;
 
             $warehouses = [];
-            if(isset($data->warehouses)){
+            if (isset($data->warehouses)) {
                 foreach ($data->warehouses as $key => $warehouse) {
-                    $warehouses[$this->decodeHashValue($key)] = [
+                    $warehouses[] = [
                         'name' => $warehouse->name,
-                        'hash' => $this->decodeHashValue($warehouse->hash),
-                        'id' => $this->decodeHashValue($warehouse->hash)
+                        'id' => (int) $this->decodeHashValue($warehouse->hash),
                     ];
                 }
+
+                $data->warehouses = $warehouses;
             }
             foreach ($data as $key => $value) {
                 $user->{$key} = $value;
             }
-            $user->id = (int)$this->decodeHashValue($data->hash);
-            $user->account_id = (int)$this->decodeHashValue($data->account_id);
+            $user->id = (int) $this->decodeHashValue($data->hash);
+            $user->account_id = (int) $this->decodeHashValue($data->account_id);
         }
-      
+
         return $user ?? null;
     }
 
@@ -55,10 +53,7 @@ class StallionTokenToUserProvider implements UserProvider
         // update via remember token not necessary
     }
 
-    public function retrieveByCredentials(array $credentials)
-    {
-        return null;
-    }
+    public function retrieveByCredentials(array $credentials) {}
 
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
